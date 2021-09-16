@@ -188,6 +188,13 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'showIconsOnly', {
+    name: 'SETTINGS.showIconsOnly',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   /** Allow player to unlock the sheet outside of creation mode */
   game.settings.register('CoC7', 'playerUnlockSheetMode', {
     name: 'SETTINGS.PlayerUnlockSheetMode',
@@ -400,6 +407,15 @@ export function registerSettings () {
     config: false,
     type: Boolean,
     default: false
+  })
+  /** Feat: welcome message */
+  game.settings.register('CoC7', 'showWelcomeMessage', {
+    name: 'SETTINGS.showWelcomeMessage',
+    hint: 'SETTINGS.showWelcomeMessage',
+    scope: 'world',
+    config: false,
+    default: true,
+    type: Boolean
   })
   game.settings.register('CoC7', 'charCreationEnabled', {
     name: 'Char creation allowed',
