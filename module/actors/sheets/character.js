@@ -1,24 +1,26 @@
 /* global $, FontFace, game, mergeObject, ui */
+import { CoC7ActorSheet } from './base.js'
 
-import { CoC7CharacterSheet } from './actor-sheet.js'
-
-export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
+export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
   _getHeaderButtons () {
-    if (!this.summarized) this.summarized = false
-    let buttons = super._getHeaderButtons()
-    buttons = [
-      {
-        label: this.summarized
-          ? game.i18n.localize('CoC7.Maximize')
-          : game.i18n.localize('CoC7.Summarize'),
-        class: 'test-extra-icon',
-        icon: this.summarized
-          ? 'fas fa-window-maximize'
-          : 'fas fa-window-minimize',
-        onclick: event => this.toggleSheetMode(event)
-      }
-    ].concat(buttons)
-    return buttons
+    if (this.constructor.name === 'CoC7CharacterSheetV2') {
+      if (!this.summarized) this.summarized = false
+      let buttons = super._getHeaderButtons()
+      buttons = [
+        {
+          label: this.summarized
+            ? game.i18n.localize('CoC7.Maximize')
+            : game.i18n.localize('CoC7.Summarize'),
+          class: 'test-extra-icon',
+          icon: this.summarized
+            ? 'fas fa-window-maximize'
+            : 'fas fa-window-minimize',
+          onclick: event => this.toggleSheetMode(event)
+        }
+      ].concat(buttons)
+      return buttons
+    }
+    return super._getHeaderButtons()
   }
 
   async toggleSheetMode (event) {
@@ -37,7 +39,88 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 
   async getData () {
     const data = await super.getData()
+
+    if (!this.skillListMode) this.skillListMode = 'alphabetical'
+
+    if (this.actor.occupation) {
+      data.data.infos.occupation = this.actor.occupation.name
+      data.data.infos.occupationSet = true
+    } else data.data.infos.occupationSet = false
+
+    if (this.actor.archetype) {
+      data.data.infos.archetype = this.actor.archetype.name
+      data.data.infos.archetypeSet = true
+    } else data.data.infos.archetypeSet = false
+
+    data.totalExperience = this.actor.experiencePoints
+    data.totalOccupation = this.actor.occupationPointsSpent
+    data.invalidOccupationPoints =
+      Number(this.actor.occupationPointsSpent) !==
+      Number(this.actor.data.data.development?.occupation)
+    data.totalArchetype = this.actor.archetypePointsSpent
+    data.invalidArchetypePoints =
+      Number(this.actor.archetypePointsSpent) !==
+      Number(this.actor.data.data.development?.archetype)
+    data.totalPersonal = this.actor.personalPointsSpent
+    data.invalidPersonalPoints =
+      Number(this.actor.personalPointsSpent) !==
+      Number(this.actor.data.data.development?.personal)
+    data.creditRatingMax = Number(
+      this.actor.occupation?.data.data.creditRating.max
+    )
+    data.creditRatingMin = Number(
+      this.actor.occupation?.data.data.creditRating.min
+    )
+    data.invalidCreditRating =
+      this.actor.creditRatingSkill?.data.data.adjustments?.occupation >
+        data.creditRatingMax ||
+      this.actor.creditRatingSkill?.data.data.adjustments?.occupation <
+        data.creditRatingMin
+    data.pulpTalentCount = data.itemsByType.talent?.length
+      ? data.itemsByType.talent?.length
+      : 0
+    data.minPulpTalents = this.actor.archetype?.data.data.talents
+      ? this.actor.archetype?.data.data.talents
+      : 0
+    data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents
+
+    data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp
+
+    data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
+    data.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
+    data.developmentRollForLuck = game.settings.get(
+      'CoC7',
+      'developmentRollForLuck'
+    )
+    data.showDevPannel = data.allowDevelopment || data.allowCharCreation
+
+    data.manualCredit = this.actor.getActorFlag('manualCredit')
+    if (!data.manualCredit) {
+      data.credit = {}
+      let factor
+      let monetarySymbol
+      if (!data.data.credit) {
+        factor = 1
+        monetarySymbol = '$'
+      } else {
+        factor = parseInt(data.data.credit.multiplier)
+          ? parseInt(data.data.credit.multiplier)
+          : 1
+        monetarySymbol = data.data.credit.monetarySymbol
+          ? data.data.credit.monetarySymbol
+          : '$'
+      }
+
+      data.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel *
+        factor}`
+      data.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
+      data.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
+    }
+
+    data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
+
     data.summarized = this.summarized
+    data.skillListModeValue = this.skillListMode === 'value'
     data.skillList = []
     let previousSpec = ''
     for (const skill of data.skills) {
@@ -52,12 +135,10 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       }
       data.skillList.push(skill)
     }
-    data.topSkills = [...data.skills]
-      .sort((a, b) => {
-        return a.data.value - b.data.value
-      })
-      .reverse()
-      .slice(0, 14)
+    data.skillsByValue = [...data.skills].sort((a, b) => {
+      return a.data.value - b.data.value
+    }).reverse()
+    data.topSkills = [...data.skillsByValue].slice(0, 14)
     data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
       .sort((a, b) => {
         return a.data.skill.main?.value - b.data.skill.main?.value
@@ -99,9 +180,47 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
     })
   }
 
-  // _onDragStart(event) {
-  //   super._onDragStart(event);
-  // }
+  activateListeners (html) {
+    super.activateListeners(html)
+
+    if (this.actor.isOwner) {
+      // MODIF: 0.8.x owner deprecated  => isOwner
+      html
+        .find('.skill-name.rollable.flagged4dev')
+        .click(async event => this._onSkillDev(event))
+      html
+        .find('.reset-occupation')
+        .click(async () => await this.actor.resetOccupation())
+      html
+        .find('.reset-archetype')
+        .click(async () => await this.actor.resetArchetype())
+      html.find('.open-item').click(event => this._onItemDetails(event))
+      html
+        .find('[name="data.attribs.hp.value"]')
+        .change(event => this.actor.setHealthStatusManually(event))
+      html.find('.toggle-list-mode').click(event => {
+        this.toggleSkillListMode(event)
+      })
+    }
+  }
+
+  async toggleSkillListMode (event) {
+    this.skillListMode === 'alphabetical' ? this.skillListMode = 'value' : this.skillListMode = 'alphabetical'
+    return await this.render(true)
+  }
+
+  async _onSkillDev (event) {
+    event.preventDefault()
+    const skillId = event.currentTarget.closest('.item').dataset.itemId
+    await this.actor.developSkill(skillId, event.shiftKey)
+  }
+
+  _onItemDetails (event) {
+    event.preventDefault()
+    const type = event.currentTarget.dataset.type
+    const item = this.actor[type]
+    if (item) item.sheet.render(true)
+  }
 
   static renderSheet (sheet) {
     if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
@@ -210,7 +329,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       }
       if (game.settings.get('CoC7', 'artworkInteractiveColor')) {
         sheet.element.css(
-          '--main-sheet-interactie-color',
+          '--main-sheet-interactive-color',
           game.settings.get('CoC7', 'artworkInteractiveColor')
         )
       }

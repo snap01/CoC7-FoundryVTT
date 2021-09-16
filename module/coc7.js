@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -15,9 +15,12 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7Socket } from './hooks/socket.js'
+import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -135,6 +138,8 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 
 DiceBot.listen()
 CoC7Hooks.listen()
+
+Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front
@@ -397,6 +402,8 @@ Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
+Hooks.on('dropActorSheetData', DropActorSheetData)
+
 function activateGlobalListener () {
   const body = $('body')
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
@@ -421,39 +428,5 @@ function _onLeftClick (event) {
   return event.shiftKey
 }
 
-Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) {
-    // Check if the targeted token is a player controlled token but no user controls it
-    let gmonly = true
-    if (
-      token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER
-    ) {
-      gmonly = false
-    } else {
-      const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (
-          k !== 'default' &&
-          v === CONST.ENTITY_PERMISSIONS.OWNER &&
-          !gms.includes(k)
-        ) {
-          gmonly = false
-        }
-      }
-    }
-    if (!gmonly) {
-      const controlled = game.users.filter(
-        a => !a.isGM && a.data.character === token.actor.id
-      )
-      if (controlled.length === 0) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', {
-            name: token.name
-          })
-        )
-      }
-    }
-  }
-})
-
 CONFIG.ui.compendium = CoC7CompendiumDirectory
+CONFIG.ui.actors = CoC7ActorDirectory

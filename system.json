@@ -6,9 +6,13 @@
   "author": "Miskatonic Investigative Society",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
-  "esmodules": ["bundle.js"],
+  "esmodules": [
+    "lib/socketlib/src/libwrapper_shim.js",
+    "lib/socketlib/src/socketlib.js",
+    "bundle.js"
+  ],
   "templateVersion": 1,
-  "styles": ["coc7g.css", "assets/mce.css"],
+  "styles": ["lib/game-icons/game-icons.css", "coc7g.css"],
   "packs": [
     {
       "label": "Skills",

@@ -1,10 +1,10 @@
-/* global Actors, Items, ItemSheet */
+/* global Actors, ActorSheet, Items, ItemSheet */
 
-import { CoC7ActorSheet } from '../actors/sheets/base.js'
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
-import { CoC7CharacterSheet } from '../actors/sheets/actor-sheet.js'
+import { CoC7CharacterSheet } from '../actors/sheets/character-v1.js'
 import { CoC7CharacterSheetV2 } from '../actors/sheets/character.js'
+import { CoC7ContainerSheet } from '../actors/sheets/container.js'
 import { CoC7ChaseSheet } from '../items/sheets/chase.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
 import { CoC7ItemSheet } from '../items/sheets/item-sheet.js'
@@ -20,7 +20,7 @@ import { CoC7VehicleSheet } from '../actors/sheets/vehicle.js'
 import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
 
 export function registerSheets () {
-  Actors.unregisterSheet('core', CoC7ActorSheet)
+  Actors.unregisterSheet('core', ActorSheet)
   Actors.registerSheet('CoC7', CoC7NPCSheet, {
     types: ['npc'],
     makeDefault: true
@@ -31,6 +31,10 @@ export function registerSheets () {
   })
   Actors.registerSheet('CoC7', CoC7CreatureSheet, {
     types: ['creature'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7ContainerSheet, {
+    types: ['container'],
     makeDefault: true
   })
   Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'] })

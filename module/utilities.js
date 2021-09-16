@@ -567,7 +567,7 @@ export class CoC7Utilities {
       actors.push(game.user.character.tokenKey)
     }
 
-    await actors.forEach(async tk => {
+    for (const tk of actors) {
       const check = new CoC7Check()
       check.diceModifier = diceModifier || 0
       check.difficulty = difficulty || CoC7Check.difficultyLevel.regular
@@ -577,7 +577,7 @@ export class CoC7Utilities {
       check.actor = tk
       await check.roll()
       check.toMessage()
-    })
+    }
 
     if (!actors.length) {
       const check = new CoC7Check()
@@ -657,17 +657,13 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-              new Error(
-                'Unable to copy to clipboard, this is likely due to your browser security settings.'
+                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
               )
-            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
     } catch (err) {
-      ui.notifications.error(
-        'Unable to copy to clipboard, this is likely due to your browser security settings.'
-      )
+      ui.notifications.error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
     }
   }
 }

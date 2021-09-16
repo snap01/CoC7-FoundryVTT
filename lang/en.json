@@ -2,6 +2,7 @@
   "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 
   "CoC7.Entities.Character": "Character",
+  "CoC7.Entities.Container": "Container",
   "CoC7.Entities.Creature": "Creature",
   "CoC7.Entities.Npc": "NPC",
   "CoC7.Entities.Vehicle": "Vehicle",
@@ -89,6 +90,7 @@
   "CoC7.Spells": "Spells",
   "CoC7.Spell": "Spell",
   "CoC7.Spells&Notes": "Spells & Notes",
+  "CoC7.Weapons": "Weapons",
   "CoC7.Effects": "Effects",
   "CoC7.Cost": "Cost",
   "CoC7.Source": "Source",
@@ -400,7 +402,14 @@
   "CoC7.AddItem": "Add item",
   "CoC7.EditItem": "Edit item",
   "CoC7.DeleteItem": "Delete Item",
-  "CoC7.AddWeapon": "Add Weapon",
+  "CoC7.TradeItem": "Trade / Store Item",
+
+  "CoC7.NewBookName": "new book",
+  "CoC7.AddBook": "Add book",
+  "CoC7.NewSpellName": "new spell",
+  "CoC7.AddSpell": "Add spell",
+
+  "CoC7.AddWeapon": "Add weapon",
   "CoC7.NewWeaponName": "new weapon",
   "CoC7.EditWeapon": "Edit Weapon",
   "CoC7.DeleteWeapon": "Delete Weapon",
@@ -656,7 +665,6 @@
   "CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",
   "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",
-  "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",
   "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
   "CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 
@@ -701,6 +709,13 @@
 
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
+
+  "CoC7.UnableToInteractWithChatCard": "You are not able to interact with this message, if you need to make a change please ask your Keeper to select the options for you",
+  "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
+  "CoC7.WarningCharacterSheetV1Depreciated": "This layout is obsolete and may not work correctly. It will be removed with the FoundryVTT v9 release, please get your Keeper to change the sheet type to CoC7.CoC7CharacterSheetV2",
+
+  "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
+  "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
 
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
@@ -802,5 +817,8 @@
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
-  "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens."
+  "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
+  "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
+  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world."
 }
