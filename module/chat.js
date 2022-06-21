@@ -13,6 +13,7 @@ import { CoC7Parser } from './apps/parser.js'
 import { SanCheckCard } from './chat/cards/san-check.js'
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
+import { GroupRollCard } from './chat/cards/group-roll-card.js'
 import { InteractiveChatCard } from './chat/interactive-chat-card.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Dice } from './dice.js'
@@ -143,6 +144,7 @@ export class CoC7Chat {
     // RollCard.bindListerners( html);
     OpposedCheckCard.bindListerners(html)
     CombinedCheckCard.bindListerners(html)
+    GroupRollCard.bindListerners(html)
   }
 
   static _onOpenActor (event) {

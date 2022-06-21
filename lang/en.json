@@ -208,6 +208,13 @@
   "CoC7.RegularRollCard": "Regular roll card",
   "CoC7.CombinedAnyHint": "Any roll must succeed",
   "CoC7.CombinedAllHint": "All rolls must succeed",
+  "CoC7.GroupAnyHint": "Everyone rolls anyone succeeding will cause a success",
+  "CoC7.GroupAllHint": "Everyone rolls but everyone must succeed",
+  "CoC7.GroupAgainstLowest": "Against Worst Only",
+  "CoC7.GroupAgainstLowestHint": "Only the token with the lowest value will roll",
+  "CoC7.GroupAgainstHighest": "Against Best Only",
+  "CoC7.GroupAgainstHighestHint": "Only the token with the highest value will roll",
+
   "CoC7.CloseCard": "Close card",
   "CoC7.AttackManeuver": "Attack Maneuver",
 
@@ -543,7 +550,7 @@
   "CoC7.MaxSanloss": "Max loss",
   "CoC7.MinSanloss": "Min loss",
   "CoC7.AlreadyLost": "Already lost",
-  "CoC7.AlreadyEncountered": "Already encountered", 
+  "CoC7.AlreadyEncountered": "Already encountered",
   "CoC7.CreatureMaxLoss": "Creature max loss",
   "CoC7.MaxLossToCreature": "Max loss to this creature",
   "CoC7.MaxPossibleSanLoss": "Max Possible loss",

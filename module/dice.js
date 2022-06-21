@@ -75,6 +75,42 @@ export class CoC7Dice {
     }
   }
 
+  static async showCoC7Dice3d (rollData) {
+    if (game.modules.get('dice-so-nice')?.active) {
+      const syncDice = game.settings.get('CoC7', 'syncDice3d')
+
+      const chatData = {
+        whisper: null,
+        blind: false
+      }
+      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+      const data = []
+      for (let j = 0, jm = rollData.length; j < jm; j++) {
+        for (let i = 0, im = rollData[j].terms.length; i < im; i++) {
+          if (typeof rollData[j].terms[i].results !== 'undefined') {
+            let type = 'd' + rollData[j].terms[i].faces
+            switch (rollData[j].terms[i].class) {
+              case 'CoC7DecaderDie':
+                type = 'd100'
+                break
+              case 'CoC7DecaderDieOther':
+                type = 'd100'
+                break
+            }
+            data.push({
+              resultLabel: rollData[j].terms[i].results[0].result,
+              result: rollData[j].terms[i].results[0].result,
+              type: type,
+              options: rollData[j].terms[i].options
+            })
+          }
+        }
+      }
+      console.log(data)
+      game.dice3d.show({ throws: [{ dice: data }] }, game.user, syncDice, chatData.whisper, chatData.blind)
+    }
+  }
+
   static async combinedRoll (options) {
     options.pool = options.pool ?? {}
     options.pool['0'] = false

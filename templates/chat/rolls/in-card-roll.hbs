@@ -1,0 +1,19 @@
+<li class='actor-roll{{#if r.disabled}} not-rolling{{/if}}' data-actor-key="{{r.actorKey}}">
+  <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{rollActorImg r.actorKey}}" title="{{r.actor.name}}"/>
+  <div class="roll-details">
+    <div class="header">
+      <div class='name'>
+        {{#if r.item}}
+          <span class="tag">{{r.item.name}}</span>
+        {{/if}}
+        <span class="tag">{{r.shortName}}</span>
+      </div>
+      <a class="gm-select-only remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+    </div>
+    {{#if flags.pending}}
+      <span class='pending'>{{ r.fullName }}: ({{r.rawValue}}%)</span>
+    {{else}}
+      xxx
+    {{/if}}
+  </div>
+</li>

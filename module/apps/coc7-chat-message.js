@@ -4,6 +4,7 @@ import { CoC7LinkCreationDialog } from './link-creation-dialog.js'
 import { isCtrlKey } from '../chat/helper.js'
 import { RollDialog } from './roll-dialog.js'
 import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
+import { GroupRollCard } from '../chat/cards/group-roll-card.js'
 import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { SanDataDialog } from './sandata-dialog.js'
@@ -52,8 +53,8 @@ export class CoC7ChatMessage {
     const select = {
       [CoC7ChatMessage.CARD_TYPE_NORMAL]: 'CoC7.RegularRollCard',
       [CoC7ChatMessage.CARD_TYPE_COMBINED]: 'CoC7.CombinedRollCard',
-      [CoC7ChatMessage.CARD_TYPE_OPPOSED]: 'CoC7.OpposedRollCard'
-      // [CoC7ChatMessage.CARD_TYPE_GROUP]: 'CoC7.GroupRollCard' - NYI
+      [CoC7ChatMessage.CARD_TYPE_OPPOSED]: 'CoC7.OpposedRollCard',
+      [CoC7ChatMessage.CARD_TYPE_GROUP]: 'CoC7.GroupRollCard'
     }
     if (
       config.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE &&
@@ -450,6 +451,40 @@ export class CoC7ChatMessage {
           } else {
             CombinedCheckCard.dispatch(data)
           }
+        }
+        break
+      case CoC7ChatMessage.CARD_TYPE_GROUP:
+        {
+          const check = new CoC7Check()
+          check.actor = !config.options.tokenKey
+            ? config.options.actorId
+            : config.options.tokenKey
+          check.characteristic = config.options.characteristic
+          check.attribute = config.options.attribute
+          check.skillId = config.options.skillId
+          check.item = config.options.itemId
+          check.difficulty = config.dialogOptions.difficulty
+          check.diceModifier = config.dialogOptions.modifier
+          check._rollMode = 'blindroll'
+          await check._perform({ silent: true })
+
+          const data = {
+            type: GroupRollCard.defaultConfig.type,
+            action: 'add',
+            roll: check.JSONRollData
+          }
+          data.roll.user = game.user.id
+
+          const diceSoNice = game.user.getFlag('dice-so-nice', 'appearance')?.global.system
+          if (typeof diceSoNice !== 'undefined') {
+            for (let i = 0, im = data.roll.dice.roll.terms.length; i < im; i++) {
+              if (typeof data.roll.dice.roll.terms[i].results !== 'undefined' && typeof data.roll.dice.roll.terms[i].options.flavor === 'undefined') {
+                data.roll.dice.roll.terms[i].options.flavor = diceSoNice
+              }
+            }
+          }
+
+          GroupRollCard.dispatch(data)
         }
         break
     }

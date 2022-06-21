@@ -1,0 +1,30 @@
+<div class="coc7 chat-card chat-card-v2 roll-card group">
+  {{#unless closed}}
+    <div class='flexrow toggle gm-visible-only'>
+      <span class="flex1 toggle-switch gm-select-only {{#if (eq flags.switch 'any')}}switched-on{{/if}}" title="{{localize 'CoC7.GroupAnyHint'}}" data-flag="any">{{localize 'CoC7.Any'}}</span>
+      <span class="flex1 toggle-switch gm-select-only {{#if (eq flags.switch 'all')}}switched-on{{/if}}" title="{{localize 'CoC7.GroupAllHint'}}" data-flag="all">{{localize 'CoC7.All'}}</span>
+    </div>
+    <div class='flexrow toggle gm-visible-only'>
+      <span class="flex1 toggle-switch gm-select-only {{#if (eq flags.switch 'againstLowest')}}switched-on{{/if}}" title="{{localize 'CoC7.GroupAgainstLowestHint'}}" data-flag="againstLowest">{{localize 'CoC7.GroupAgainstLowest'}}</span>
+      <span class="flex1 toggle-switch gm-select-only {{#if (eq flags.switch 'againstHighest')}}switched-on{{/if}}" title="{{localize 'CoC7.GroupAgainstHighestHint'}}" data-flag="againstHighest">{{localize 'CoC7.GroupAgainstHighest'}}</span>
+    </div>
+  {{/unless}}
+
+  <ol>
+    {{#each rolls as |r id| }}
+      {{> "systems/CoC7/templates/chat/rolls/in-card-roll.hbs" r=r flags=../flags}}
+    {{/each}}
+  </ol>
+
+  {{#if rollable}}
+    <div class='card-buttons gm-only'>
+      <button class='roll-card'>{{localize 'CoC7.RollDice'}}</button>
+    </div>
+  {{/if}}
+
+  {{#unless closed}}
+    <div class='card-buttons gm-visible-only'>
+      <button data-action='close-card'>{{localize 'CoC7.CloseCard'}}</button>
+    </div>
+  {{/unless}}
+</div>

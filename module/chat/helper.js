@@ -126,6 +126,12 @@ export class chatHelper {
     return game.actors.get(key) || null
   }
 
+  static getUserFromActorKey (key) {
+    const actor = (chatHelper.getActorFromKey(key) ?? [])
+    const user = actor.owners.find(u => !u.isGM && u.active)
+    return user
+  }
+
   static getSpeakerFromKey (actorKey) {
     const speaker = {}
     const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
