@@ -37,7 +37,8 @@
   },
   "standard": {
     "ignore": [
-      "/lib/socketlib/"
+      "/lib/socketlib/",
+      "/lib/monks-active-tiles/"
     ]
   }
 }

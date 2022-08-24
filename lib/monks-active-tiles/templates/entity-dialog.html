@@ -1,0 +1,14 @@
+<form>
+  <div class="form-group">
+    <label for="entity-id">Entity ID</label>
+    <div class="form-fields">
+      <input type="text" name="entity-id" value="{{data.id}}">
+    </div>
+  </div>
+
+  {{#if poweredBy}}
+    <div class="powered-by-monks-active-tiles">
+      Powered by Monk's Active Tile Triggers
+    </div>
+  {{/if}}
+</form>

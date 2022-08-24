@@ -13,6 +13,7 @@
   "esmodules": [
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",
+    "lib/loader.js",
     "bundle.js"
   ],
   "templateVersion": 1,
