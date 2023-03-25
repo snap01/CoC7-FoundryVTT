@@ -15,7 +15,8 @@
 
 const developmentOptions = {
   systemFolderName: 'CoC7',
-  userDataPath: 'PATH_TO_FOUNDRY_DATA_FOLDER'
+  userDataPath: 'PATH_TO_FOUNDRY_DATA_FOLDER',
+  baseURL: 'URL_TO_FOUNDRY_INSTANCE'
 }
 
 export default developmentOptions

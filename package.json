@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "format": "standard --fix",
+    "tests": "cypress open",
     "watch": "webpack --mode development"
   },
   "repository": {
@@ -23,6 +24,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
+    "cypress": "^12.8.1",
     "del": "^7.0.0",
     "jsonfile": "^6.1.0",
     "less-loader": "^11.0.0",
