@@ -29,7 +29,7 @@ If this is your first time it is recommends you also read the following sections
 
 Foundry VTT is based in actors and items. This module includes a number of system specific actors and items, and some examples of them can be found in the included system compendiums.
 
-- Actor overview
+- [Actor overview](#actor-overview)
 - Items overview
 - Settings overview
 - Scene menu overview
