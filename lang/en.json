@@ -11,6 +11,8 @@
   "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
   "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
 
+  "CoC7.TEST": "TEST",
+
   "CoC7.Entities.Archetype": "Archetype",
   "CoC7.Entities.Book": "Book",
   "CoC7.Entities.Chase": "Chase",
