@@ -1,0 +1,37 @@
+name: Lint
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - '**.js'
+jobs:
+  prettier-standard:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm install
+          if test -f "results.txt"; then rm results.txt; fi
+          NODE_NO_WARNINGS=1 npm run lint 2>> results.txt || true
+          sed -i 's/\/home\/runner\/work\/CoC7-FoundryVTT\/CoC7-FoundryVTT//g' results.txt
+          if [ ! -s results.txt ] ; then rm results.txt ; fi
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'results.txt'
+      - name: comment PR
+        if: steps.check_files.outputs.files_exists == 'true'
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: results.txt
