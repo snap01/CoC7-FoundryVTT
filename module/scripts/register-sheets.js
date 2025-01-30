@@ -4,6 +4,7 @@ import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/character.js'
 import { CoC7CharacterSheetV3 } from '../actors/sheets/character-v3.js'
 import { CoC7CharacterSheetV3b } from '../actors/sheets/character-v3b.js'
+import { CoC7CharacterSheetMinimized } from '../actors/sheets/character-minimized.js'
 import { CoC7ContainerSheet } from '../actors/sheets/container.js'
 import { CoC7ChaseSheet } from '../items/chase/sheet.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
@@ -43,6 +44,9 @@ export function registerSheets () {
     makeDefault: true
   })
   Actors.registerSheet('CoC7', CoC7CharacterSheet, {
+    types: ['character']
+  })
+  Actors.registerSheet('CoC7', CoC7CharacterSheetMinimized, {
     types: ['character']
   })
   Actors.registerSheet('CoC7', CoC7CharacterSheetV3, {

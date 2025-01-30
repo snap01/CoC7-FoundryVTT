@@ -1,4 +1,4 @@
-/* global foundry game TextEditor */
+/* global CONFIG foundry game TextEditor */
 import { CoC7CharacterSheet } from './character.js'
 
 export class CoC7CharacterSheetV3b extends CoC7CharacterSheet {
@@ -10,6 +10,27 @@ export class CoC7CharacterSheetV3b extends CoC7CharacterSheet {
       height: 810,
       scrollY: ['.sheet-body']
     })
+  }
+
+  _getHeaderButtons () {
+    let buttons = super._getHeaderButtons()
+    buttons = [
+      {
+        label: game.i18n.localize('CoC7.Summarize'),
+        class: 'test-extra-icon',
+        icon: 'fas fa-window-minimize',
+        onclick: event => this.toggleSheetMode(event)
+      }
+    ].concat(buttons)
+    return buttons
+  }
+
+  async toggleSheetMode (event) {
+    const ClassName = CONFIG.Actor.sheetClasses.character['CoC7.CoC7CharacterSheetMinimized']?.cls
+    if (typeof ClassName !== 'undefined') {
+      await this.close()
+      await (new ClassName(this.object, { editable: this.object.isOwner })).render(true)
+    }
   }
 
   async getData () {
