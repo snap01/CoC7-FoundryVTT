@@ -2,7 +2,7 @@
   "id": "CoC7",
   "title": "Call of Cthulhu 7th Edition",
   "description": "An implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "7.6.4",
+  "version": "7.6.5",
   "authors": [
     {
       "name": "Miskatonic Investigative Society"
@@ -206,8 +206,8 @@
   "primaryTokenAttribute": "attribs.hp",
   "secondaryTokenAttribute": "attribs.san",
   "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT",
-  "manifest": "https://github.com/snap01/CoC7-FoundryVTT/releases/download/7.6.4/system.json",
-  "download": "https://github.com/snap01/CoC7-FoundryVTT/releases/download/7.6.4/system.zip",
+  "manifest": "https://github.com/snap01/CoC7-FoundryVTT/releases/download/7.6.5/system.json",
+  "download": "https://github.com/snap01/CoC7-FoundryVTT/releases/download/7.6.5/system.zip",
   "media": [
     {
       "type": "setup",

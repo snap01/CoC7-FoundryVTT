@@ -47,24 +47,15 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/chat/messages/roll-container.hbs',
     'systems/CoC7/templates/chat/messages/roll-dice.hbs',
 
-    'systems/CoC7/templates/actors/parts/actor-picture-frame-v3.hbs', // same
+    'systems/CoC7/templates/actors/parts/actor-picture-frame-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-characteristics-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-development-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-skills-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-combat-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-possessions-v3.hbs',
     'systems/CoC7/templates/actors/parts/actor-background-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-mythos-encounters-v3.hbs',
-    'systems/CoC7/templates/actors/parts/actor-active-effects-v3.hbs',
-
-    'systems/CoC7/templates/actors/parts/actor-characteristics-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-development-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-skills-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-combat-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-possessions-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-background-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-keeper-notes-v3b.hbs',
-    'systems/CoC7/templates/actors/parts/actor-active-effects-v3b.hbs'
+    'systems/CoC7/templates/actors/parts/actor-keeper-notes-v3.hbs',
+    'systems/CoC7/templates/actors/parts/actor-active-effects-v3.hbs'
   ]
 
   /** Load the template parts */

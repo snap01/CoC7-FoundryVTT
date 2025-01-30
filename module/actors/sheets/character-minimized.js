@@ -29,7 +29,7 @@ export class CoC7CharacterSheetMinimized extends CoC7CharacterSheet {
   }
 
   async toggleSheetMode (event) {
-    const ClassName = CONFIG.Actor.sheetClasses.character['CoC7.CoC7CharacterSheetV3b']?.cls
+    const ClassName = CONFIG.Actor.sheetClasses.character['CoC7.CoC7CharacterSheetV3']?.cls
     if (typeof ClassName !== 'undefined') {
       await this.close()
       await (new ClassName(this.object, { editable: this.object.isOwner })).render(true)

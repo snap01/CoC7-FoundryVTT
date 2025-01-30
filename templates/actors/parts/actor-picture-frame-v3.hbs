@@ -1,6 +1,6 @@
 <!-- Character photo frame and status icons -->
 <div class="photo-frame">
-  <img class="sheet-photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" style="filter: saturate({{imgSaturation}})" />
+  <img class="sheet-photo{{#unless data.system.flags.locked}} portrait-frame{{/unless}}" src="{{actor.img}}" title="{{actor.name}}"{{#if data.system.flags.locked}} data-edit="img"{{/if}} style="filter: saturate({{imgSaturation}});{{#if data.flags.CoC7.portraitFrame}}object-fit: {{data.flags.CoC7.portraitFrame}}{{/if}}" />
   <div class="status-icons">
     <a class="condition-monitor status-icon fallen {{#if data.system.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
     <a class="condition-monitor status-icon unconscious {{#if data.system.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
